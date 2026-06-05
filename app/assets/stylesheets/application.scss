@@ -48,6 +48,7 @@ header div {
 
 a:hover {
     color: apua!important;
+    text-decoration: underline;
 }
 
 #head-top {
@@ -56,5 +57,9 @@ a:hover {
 }
 
 .nav-link {
+    text-decoration: none;
+}
+
+a{
     text-decoration: none;
 }
