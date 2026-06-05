@@ -5,9 +5,9 @@
     </div>
     <div class="d-flex">
       <div class="d-block">
-        <p class="caption">ユーザ名</p>
+        <p class="caption"><%= @post.user.name %></p>
         <% if @post.image.attached? %>
-          <%= image_tag @post.image.variant(resize_to_limit: [450, 350]) %>(br)
+          <%= image_tag @post.image.variant(resize_to_limit: [450, 350]) %><br>
         <% end %>
         <p class="caption"><%= @post.location %></p>
           <% if @post.favorited_by?(current_user) %>
@@ -22,8 +22,10 @@
         </p>
         <h2>感想</h2>
         <p id="text"><%= @post.text %></p>
-        <%= link_to '編集する', edit_post_path(@post.id), class: "btn btn-info mr-3" %>
-        <%= link_to '削除する', post_path(@post.id),  data: { turbo_method: :delete, turbo_confirm:  "本当に消しますか？"}, class: "btn btn-danger" %><br>
+        <% if @post.user == current.user %>
+          <%= link_to '編集する', edit_post_path(@post.id), class: "btn btn-info mr-3" %>
+          <%= link_to '削除する', post_path(@post.id),  data: { turbo_method: :delete, turbo_confirm:  "本当に消しますか？"}, class: "btn btn-danger" %><br>
+        <% end %>
         <%= link_to '投稿一覧へ', posts_path, class: "btn btn-dark mt-3" %>
       </div>
       <div class="comments ml-5 mt-5">

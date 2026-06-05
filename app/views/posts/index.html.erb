@@ -7,7 +7,7 @@
       <% @posts.each do |post| %>
         <div class="one-post col-sm-4 mb-3">
           <%= link_to post_path(post) do %>
-            <p class="caption">ユーザ名</p>
+            <p class="caption"><%= post.user.name %></p>
             <% if post.image.attached? %>
                <%=image_tag post.image.variant(resize_to_limit: [300, 200]) %><br>
             <% end %>
