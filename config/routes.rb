@@ -7,9 +7,12 @@ Rails.application.routes.draw do
       resource :relationships, only: [:create, :destroy]
     end
     resources :posts do
-    resources :comments, only:[:create, :destroy]
-    resource :favorites, only:[:create, :destroy]
-  end
+      resources :comments, only:[:create, :destroy]
+      resource :favorites, only:[:create, :destroy]
+      collection do
+        get 'confirm'
+      end
+    end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
