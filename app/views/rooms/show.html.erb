@@ -1,0 +1,36 @@
+<div class="cover-room-show">
+  <div class="container-room d-flex flex-column align-items-center" >
+    <h3 class="font-weight-normal"><%= link_to "#{@another_entry.user.name}さんとのメッセージ", user_path(@another_entry.user) %></h3>
+  </div>
+  <div class="chat-body p-3 flex-grow-1 overflow-auto">
+    <% @messages.each do |m| %>
+      <% if m.user_id == current_user.id %>
+        <div class="d-flex justify-content-end mb-5 me-1">
+          <div class="my_comment p-2 rounded bg-light d-inline-block"><%= m.message %></div>
+        </div>
+      <% else %>
+        <div class="d-flex justify-content-start mb-3 ms-3">
+          <div class="fukidasi d-flex">
+            <div class="faceicon">
+                <% if m.user.profile_image.attached? %>
+                    <%= image_tag m.user.profile_image, size: '50x50', class: "mr-2 profile-img" %>
+                <% else %>
+                    <%= image_tag "no_image.svg", size: '50x50', class: "mr-2 profile-img" %>
+                <% end %>
+            </div>
+           <div class="chatting p-2 rounded bg-light d-inline-block says"><%= m.message %></div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <div class="chat-form-box">
+    <%= form_with model: @message do |f| %>
+      <div class="chat-form-group d-flex">
+        <%= f.text_field :message, autofocus: true, autocomplete: "メッセージを送る", class: "form-control me-2 flex-grow-1" %>
+        <%= f.hidden_field :room_id, value: @room.id %>
+        <%= f.submit "送信", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>

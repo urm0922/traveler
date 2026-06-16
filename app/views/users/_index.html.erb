@@ -1,6 +1,6 @@
 <div class="row mt-5 w-50">
     <% users.each do |user| %>
-    <div class="one-post card mt-3">
+    <div class="one-post-card mt-3">
         <%= link_to user_path(user) do %>
         <div class="d-flex">
             <% if user.profile_image.attached? %>

@@ -10,9 +10,22 @@
     <% if user_signed_in? && @user == current_user %>
       <p class="d-flex align-self-end">
         <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-success" %>
+        <%= link_to "チャット一覧へ", rooms_path(current_user), class: "btn btn-primary" %>
       </p>
     <% end %>
     <% if current_user != @user %>
+      <% if current_user.following?(@user) && @user.following?(current_user) %>
+        <% if @is_room == true %>
+          <%= link_to 'チャットを始める', room_path(@room_id), class: "btn btn-success" %>
+        <% else %>
+          <%= form_with model: @room do |f| %>
+            <%= f.fields_for @entry do |e| %>
+              <%= e.hidden_field :user_id, value: @user.id %>
+            <% end %>
+            <%= f.submit "メッセージを送る", class:"btn btn-primary" %>
+          <% end %>
+        <% end %>
+      <% end %>
       <% if current_user.following?(@user) %>
         <p class="d-flex align-self-end">
           <%= link_to 'フォローをはずす', user_relationships_path(@user.id), data: { turbo_method: :delete }, class: "btn btn-danger" %>
@@ -51,7 +64,6 @@
           <% end %>
         </div>
       <% end %>
-    </div>
-    <%= paginate @posts %>
   </div>
+  <%= paginate @posts %>
 </div>
